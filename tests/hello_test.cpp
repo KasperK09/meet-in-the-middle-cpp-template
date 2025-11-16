@@ -8,7 +8,7 @@ using Catch::Approx;
 #include <fstream>
 #include <string>
 
-//
+
 void make_csv_file(const std::string& filename, const std::string& contents) {
     std::ofstream fout(filename);
     fout << contents;
@@ -59,9 +59,6 @@ TEST_CASE("Identical values") {
     REQUIRE(findMedianFromFile("data_same.csv") == Approx(8.0));
 }
 
-// -------------------------------------------------------------
-// I — Interface
-// -------------------------------------------------------------
 TEST_CASE("File missing") {
     REQUIRE_THROWS_AS(findMedianFromFile("nope.csv"), std::runtime_error);
 }
@@ -72,18 +69,12 @@ TEST_CASE("Trailing comma handled") {
     REQUIRE(findMedianFromFile("data_trailing.csv") == Approx(2.5));
 }
 
-// -------------------------------------------------------------
-// E — Exceptions
-// -------------------------------------------------------------
 TEST_CASE("Malformed CSV throws") {
     make_csv_file("data_bad.csv", "1,2,x,4");
 
     REQUIRE_THROWS_AS(findMedianFromFile("data_bad.csv"), std::runtime_error);
 }
 
-// -------------------------------------------------------------
-// S — Simple Example
-// -------------------------------------------------------------
 TEST_CASE("Given example") {
     make_csv_file("data_example.csv",
         "1,2,6,8,9,11,27,45,71,90,104");
